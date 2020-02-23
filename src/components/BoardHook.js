@@ -3,41 +3,34 @@ import React, { useState, useEffect } from "react";
 import Cell from "./Cell";
 
 export default function Board(props) {
-    const [board, setBoard] = useState([
-        [false, false, false, false, false],
-        [false, false, false, false, false],
-        [false, false, false, false, false],
-        [false, false, false, false, false],
-        [false, false, false, false, false]
-    ]);
-
-    useEffect(() => {
-        const boardClone = board;
-        for (let i = 0; i < boardClone.length + 1; i++) {
-            const x = Math.floor(Math.random() * boardClone.length);
-            const y = Math.floor(Math.random() * boardClone.length);
-            boardClone[x][y] = true;
+    const createBoard = (x, y) => {
+        let board = [];
+        for (let i = 0; i < x; i++) {
+            board[i] = new Array(y).fill(false);
         }
-        setBoard(boardClone);
-    }, [board]);
-
+        for (let i = 0; i < 4; i++) {
+            const x = Math.floor(Math.random() * board.length);
+            const y = Math.floor(Math.random() * board.length);
+            board[x][y] = true;
+        }
+        return board;
+    };
+    const [board, setBoard] = useState(createBoard(3, 3));
+    const [isWin, setIsWin] = useState(false);
     const flipCell = (x, y, boardClone) => {
-        if (x >= 0 && x < 5 && y >= 0 && y < 5) {
+        if (x >= 0 && x < 3 && y >= 0 && y < 3) {
             boardClone[x][y] = !boardClone[x][y];
         }
     };
 
     const checkWin = () => {
-        const { board } = this.state;
-        if (board.every(row => row.every(cell => cell === true) === true)) {
-            this.setState({
-                isWin: true
-            });
+        if (board.every(row => row.every(cell => cell === true))) {
+            setIsWin(true);
         }
     };
 
     const handleCellClick = (x, y) => {
-        const boardClone = board;
+        const boardClone = [...board];
         flipCell(x, y, boardClone);
         flipCell(x + 1, y, boardClone);
         flipCell(x, y + 1, boardClone);
@@ -45,8 +38,12 @@ export default function Board(props) {
         flipCell(x, y - 1, boardClone);
         setBoard(boardClone);
     };
+    useEffect(() => {
+        checkWin();
+    });
     return (
         <div className="board">
+            {isWin && <p>You Win!</p>}
             <table>
                 <tbody>
                     {board.map((row, rowIndex) => (

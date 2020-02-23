@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import classnames from "classnames";
 export default function Cell(props) {
-    const a = useState();
-    console.log(a);
     return (
         <td
             className={classnames("cell", {
