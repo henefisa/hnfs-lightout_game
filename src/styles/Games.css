@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+}
+
+.cell {
+    display: inline-block;
+    background: #202020;
+    width: 100px;
+    height: 100px;
+    margin: 2px 2px 0 2px;
+    transition: all .3s;
+}
+
+.cell:hover{
+    background-color: rgb(61, 61, 255);
+
+}
+
+.active{
+    background: blue;
+}
+
+.App {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-color: #999;
+}
+
+.board {
+    width: 535px;
+    height: 535px;
+    min-width: 535px;
+    min-height: 535px;
+}
